@@ -1,11 +1,12 @@
-# 初中物理模型可视化教学平台
+﻿# 初中物理模型可视化教学平台
 
 这是一个零依赖静态网页作品集，面向初中物理课堂投屏、学生探究和前端求职展示。
 
 ## 页面入口
 
-- `portfolio_demo.html`：求职作品集入口，包含两个 demo 的介绍和内嵌预览。
-- `index.html`：力与运动专项仿真。
+- `index.html`：求职作品集入口，包含两个 demo 的介绍和内嵌预览。
+- `motion_demo.html`：力与运动专项仿真。
+- `portfolio_demo.html`：求职作品集入口备份页面。
 - `demo_code/index.html`：五大物理模型合集，包含凸透镜成像、欧姆定律、浮力模型、杠杆平衡、物态变化曲线。
 
 ## 技术特点
@@ -25,5 +26,5 @@
 4. 发布后访问：
 
 ```text
-https://你的用户名.github.io/仓库名/portfolio_demo.html
+https://你的用户名.github.io/仓库名/
 ```

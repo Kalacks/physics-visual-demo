@@ -1,0 +1,135 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>力与运动可视化演示</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="page-title">
+        <header class="topbar">
+          <div class="brand-block">
+            <div class="brand-mark" aria-hidden="true">力</div>
+            <div>
+              <h1 id="page-title">力与运动可视化演示</h1>
+              <p>观察小车运动、受力箭头、惯性现象，以及 s-t 图像和 v-t 图像的同步变化。</p>
+            </div>
+          </div>
+          <div class="status-panel" aria-live="polite">
+            <div>
+              <span>当前速度</span>
+              <strong id="speedValue">1.20 m/s</strong>
+            </div>
+            <div>
+              <span>合力方向</span>
+              <strong id="netForceValue">平衡</strong>
+            </div>
+            <div>
+              <span>运动时间</span>
+              <strong id="timeValue">0.0 s</strong>
+            </div>
+          </div>
+        </header>
+
+        <section class="intro-strip" aria-label="项目说明">
+          <div>
+            <strong>专项仿真：力学核心概念</strong>
+            <p>面向八年级课堂，把运动过程、受力分析和函数图像放在同一屏联动展示。</p>
+          </div>
+          <a href="./demo_code/index.html">打开五大物理模型合集</a>
+        </section>
+
+        <div class="content-grid">
+          <aside class="control-panel" aria-label="演示控制">
+            <section class="panel-block">
+              <h2>预设场景</h2>
+              <div class="scenario-list" role="group" aria-label="选择预设场景">
+                <button class="scenario-button active" type="button" data-scenario="uniform">匀速直线运动</button>
+                <button class="scenario-button" type="button" data-scenario="speed">速度与斜率</button>
+                <button class="scenario-button" type="button" data-scenario="balance">二力平衡</button>
+                <button class="scenario-button" type="button" data-scenario="unbalanced">非平衡力</button>
+                <button class="scenario-button" type="button" data-scenario="inertia">惯性现象</button>
+                <button class="scenario-button" type="button" data-scenario="friction">摩擦力</button>
+              </div>
+            </section>
+
+            <section class="panel-block">
+              <h2>播放控制</h2>
+              <div class="play-row">
+                <button id="playButton" class="primary-button" type="button">播放</button>
+                <button id="pauseButton" class="secondary-button" type="button">暂停</button>
+                <button id="resetButton" class="secondary-button" type="button">重置</button>
+              </div>
+            </section>
+
+            <section class="panel-block">
+              <h2>可调参数</h2>
+              <label class="control-row" for="speedSlider">
+                <span>初速度</span>
+                <output id="speedSliderValue" for="speedSlider">1.20 m/s</output>
+              </label>
+              <input id="speedSlider" type="range" min="0.2" max="2.4" step="0.02" value="1.2" />
+
+              <label class="control-row" for="pushSlider">
+                <span>推力大小</span>
+                <output id="pushSliderValue" for="pushSlider">4 N</output>
+              </label>
+              <input id="pushSlider" type="range" min="0" max="8" step="0.1" value="4" />
+
+              <label class="control-row" for="roughSlider">
+                <span>粗糙程度</span>
+                <output id="roughSliderValue" for="roughSlider">0.40</output>
+              </label>
+              <input id="roughSlider" type="range" min="0" max="1" step="0.01" value="0.4" />
+
+              <label class="control-row" for="pressureSlider">
+                <span>压力倍数</span>
+                <output id="pressureSliderValue" for="pressureSlider">1.0 倍</output>
+              </label>
+              <input id="pressureSlider" type="range" min="0.5" max="2.5" step="0.02" value="1" />
+            </section>
+
+            <section class="conclusion-card" aria-live="polite">
+              <h2>课堂结论</h2>
+              <p id="conclusionText">匀速直线运动中，相同时间内通过的路程相同，s-t 图像是一条斜直线，v-t 图像是一条水平线。</p>
+            </section>
+          </aside>
+
+          <section class="demo-panel" aria-label="力与运动演示区">
+            <div class="stage-card">
+              <div class="section-heading">
+                <h2 id="sceneTitle">匀速直线运动</h2>
+                <span id="sceneBadge">合力为 0</span>
+              </div>
+              <svg id="sceneSvg" class="scene-svg" viewBox="0 0 900 360" role="img" aria-labelledby="sceneTitle sceneDescription">
+                <desc id="sceneDescription">小车沿水平轨道运动，箭头表示力的方向和大小。</desc>
+              </svg>
+            </div>
+
+            <div class="graph-grid" aria-label="运动图像">
+              <section class="graph-card">
+                <div class="graph-head">
+                  <h2>s-t 图像</h2>
+                  <span>路程随时间变化</span>
+                </div>
+                <svg id="stGraph" class="graph-svg" viewBox="0 0 420 260" role="img" aria-label="路程时间图像"></svg>
+              </section>
+
+              <section class="graph-card">
+                <div class="graph-head">
+                  <h2>v-t 图像</h2>
+                  <span>速度随时间变化</span>
+                </div>
+                <svg id="vtGraph" class="graph-svg" viewBox="0 0 420 260" role="img" aria-label="速度时间图像"></svg>
+              </section>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,135 +1,404 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>力与运动可视化演示</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title>初中物理可视化教学作品集 Demo</title>
+    <style>
+      :root {
+        --navy: #073b6d;
+        --blue: #0c83d3;
+        --blue-dark: #07599b;
+        --yellow: #ffc83d;
+        --green: #20a464;
+        --text: #17324d;
+        --muted: #52708a;
+        --line: #07528f;
+        --shadow: 0 12px 0 rgba(4, 54, 94, 0.14), 0 22px 42px rgba(8, 67, 112, 0.16);
+        font-family:
+          "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.95), transparent 24%),
+          linear-gradient(180deg, #d9f2ff 0%, #b8e5ff 42%, #e8f7ff 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(7, 82, 143, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(7, 82, 143, 0.08) 1px, transparent 1px);
+        background-size: 36px 36px;
+      }
+
+      a,
+      button {
+        font: inherit;
+      }
+
+      .page {
+        position: relative;
+        width: min(1280px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 34px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 20px;
+        align-items: stretch;
+        padding: 22px;
+        border: 4px solid #063c6c;
+        border-radius: 18px;
+        color: #ffffff;
+        background: linear-gradient(180deg, var(--blue), var(--blue-dark));
+        box-shadow: var(--shadow);
+      }
+
+      .brand {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .logo {
+        display: grid;
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+        place-items: center;
+        border: 4px solid rgba(255, 255, 255, 0.92);
+        border-radius: 50%;
+        color: #0a5795;
+        background: #ffd84d;
+        box-shadow: inset 0 -5px 0 rgba(130, 86, 0, 0.22);
+        font-size: 34px;
+        font-weight: 1000;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(30px, 5vw, 52px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        max-width: 780px;
+        margin-top: 12px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .score-card {
+        padding: 18px;
+        border: 3px solid #063c6c;
+        border-radius: 16px;
+        color: var(--text);
+        background: #ffffff;
+        box-shadow: inset 0 -5px 0 rgba(7, 82, 143, 0.1);
+      }
+
+      .score-card strong {
+        display: block;
+        color: var(--blue-dark);
+        font-size: 32px;
+        line-height: 1.1;
+      }
+
+      .score-card span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .card,
+      .preview,
+      .notes {
+        border: 4px solid var(--line);
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      .card {
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .card h2 {
+        color: var(--navy);
+        font-size: 24px;
+      }
+
+      .card p,
+      .notes li {
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.65;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag {
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: #073b6d;
+        background: #ffe58a;
+        box-shadow: inset 0 -3px 0 rgba(159, 105, 0, 0.18);
+        font-size: 13px;
+        font-weight: 1000;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid var(--line);
+        border-radius: 14px;
+        padding: 0 14px;
+        color: var(--navy);
+        background: linear-gradient(180deg, #ffffff 0%, #dff4ff 100%);
+        box-shadow: inset 0 -5px 0 rgba(7, 82, 143, 0.12);
+        font-size: 14px;
+        font-weight: 1000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button.primary {
+        background: linear-gradient(180deg, #ffe983 0%, var(--yellow) 100%);
+        box-shadow: inset 0 -5px 0 rgba(144, 91, 0, 0.22);
+      }
+
+      .preview {
+        margin-top: 20px;
+        overflow: hidden;
+      }
+
+      .preview-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #e8f6ff 100%);
+        border-bottom: 4px solid var(--line);
+      }
+
+      .preview-head h2 {
+        color: var(--navy);
+        font-size: 22px;
+      }
+
+      .preview-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 680px;
+        border: 0;
+        background: #ffffff;
+      }
+
+      .notes {
+        margin-top: 20px;
+        padding: 18px 20px;
+        background: linear-gradient(180deg, #fff9d8 0%, #fff0a6 100%);
+      }
+
+      .notes h2 {
+        color: #704c00;
+      }
+
+      .notes ul {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .notes li {
+        border: 2px solid rgba(128, 85, 0, 0.24);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .cards,
+        .notes ul {
+          grid-template-columns: 1fr;
+        }
+
+        .brand {
+          align-items: flex-start;
+        }
+
+        iframe {
+          height: 620px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .page {
+          width: min(100% - 24px, 1280px);
+          padding-top: 14px;
+        }
+
+        .hero {
+          padding: 16px;
+        }
+
+        .logo {
+          flex-basis: 50px;
+          width: 50px;
+          height: 50px;
+          font-size: 28px;
+        }
+
+        .preview-head {
+          display: grid;
+        }
+
+        iframe {
+          height: 560px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <main class="app-shell">
-      <section class="workspace" aria-labelledby="page-title">
-        <header class="topbar">
-          <div class="brand-block">
-            <div class="brand-mark" aria-hidden="true">力</div>
-            <div>
-              <h1 id="page-title">力与运动可视化演示</h1>
-              <p>观察小车运动、受力箭头、惯性现象，以及 s-t 图像和 v-t 图像的同步变化。</p>
-            </div>
-          </div>
-          <div class="status-panel" aria-live="polite">
-            <div>
-              <span>当前速度</span>
-              <strong id="speedValue">1.20 m/s</strong>
-            </div>
-            <div>
-              <span>合力方向</span>
-              <strong id="netForceValue">平衡</strong>
-            </div>
-            <div>
-              <span>运动时间</span>
-              <strong id="timeValue">0.0 s</strong>
-            </div>
-          </div>
-        </header>
-
-        <section class="intro-strip" aria-label="项目说明">
+    <main class="page">
+      <section class="hero">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">物</div>
           <div>
-            <strong>专项仿真：力学核心概念</strong>
-            <p>面向八年级课堂，把运动过程、受力分析和函数图像放在同一屏联动展示。</p>
+            <h1>初中物理模型可视化教学平台</h1>
+            <p>一个面向课堂投屏和学生探究的前端作品：用原生 SVG、拖拽交互和实时计算，把力学、光学、电学、浮力、热学曲线做成可操作的网页仿真。</p>
           </div>
-          <a href="./demo_code/index.html">打开五大物理模型合集</a>
-        </section>
-
-        <div class="content-grid">
-          <aside class="control-panel" aria-label="演示控制">
-            <section class="panel-block">
-              <h2>预设场景</h2>
-              <div class="scenario-list" role="group" aria-label="选择预设场景">
-                <button class="scenario-button active" type="button" data-scenario="uniform">匀速直线运动</button>
-                <button class="scenario-button" type="button" data-scenario="speed">速度与斜率</button>
-                <button class="scenario-button" type="button" data-scenario="balance">二力平衡</button>
-                <button class="scenario-button" type="button" data-scenario="unbalanced">非平衡力</button>
-                <button class="scenario-button" type="button" data-scenario="inertia">惯性现象</button>
-                <button class="scenario-button" type="button" data-scenario="friction">摩擦力</button>
-              </div>
-            </section>
-
-            <section class="panel-block">
-              <h2>播放控制</h2>
-              <div class="play-row">
-                <button id="playButton" class="primary-button" type="button">播放</button>
-                <button id="pauseButton" class="secondary-button" type="button">暂停</button>
-                <button id="resetButton" class="secondary-button" type="button">重置</button>
-              </div>
-            </section>
-
-            <section class="panel-block">
-              <h2>可调参数</h2>
-              <label class="control-row" for="speedSlider">
-                <span>初速度</span>
-                <output id="speedSliderValue" for="speedSlider">1.20 m/s</output>
-              </label>
-              <input id="speedSlider" type="range" min="0.2" max="2.4" step="0.02" value="1.2" />
-
-              <label class="control-row" for="pushSlider">
-                <span>推力大小</span>
-                <output id="pushSliderValue" for="pushSlider">4 N</output>
-              </label>
-              <input id="pushSlider" type="range" min="0" max="8" step="0.1" value="4" />
-
-              <label class="control-row" for="roughSlider">
-                <span>粗糙程度</span>
-                <output id="roughSliderValue" for="roughSlider">0.40</output>
-              </label>
-              <input id="roughSlider" type="range" min="0" max="1" step="0.01" value="0.4" />
-
-              <label class="control-row" for="pressureSlider">
-                <span>压力倍数</span>
-                <output id="pressureSliderValue" for="pressureSlider">1.0 倍</output>
-              </label>
-              <input id="pressureSlider" type="range" min="0.5" max="2.5" step="0.02" value="1" />
-            </section>
-
-            <section class="conclusion-card" aria-live="polite">
-              <h2>课堂结论</h2>
-              <p id="conclusionText">匀速直线运动中，相同时间内通过的路程相同，s-t 图像是一条斜直线，v-t 图像是一条水平线。</p>
-            </section>
-          </aside>
-
-          <section class="demo-panel" aria-label="力与运动演示区">
-            <div class="stage-card">
-              <div class="section-heading">
-                <h2 id="sceneTitle">匀速直线运动</h2>
-                <span id="sceneBadge">合力为 0</span>
-              </div>
-              <svg id="sceneSvg" class="scene-svg" viewBox="0 0 900 360" role="img" aria-labelledby="sceneTitle sceneDescription">
-                <desc id="sceneDescription">小车沿水平轨道运动，箭头表示力的方向和大小。</desc>
-              </svg>
-            </div>
-
-            <div class="graph-grid" aria-label="运动图像">
-              <section class="graph-card">
-                <div class="graph-head">
-                  <h2>s-t 图像</h2>
-                  <span>路程随时间变化</span>
-                </div>
-                <svg id="stGraph" class="graph-svg" viewBox="0 0 420 260" role="img" aria-label="路程时间图像"></svg>
-              </section>
-
-              <section class="graph-card">
-                <div class="graph-head">
-                  <h2>v-t 图像</h2>
-                  <span>速度随时间变化</span>
-                </div>
-                <svg id="vtGraph" class="graph-svg" viewBox="0 0 420 260" role="img" aria-label="速度时间图像"></svg>
-              </section>
-            </div>
-          </section>
         </div>
+        <aside class="score-card">
+          <strong>2 套 Demo</strong>
+          <span>力与运动专项 + 五大核心模型合集</span>
+          <span>零依赖静态网页，可直接打开演示</span>
+        </aside>
+      </section>
+
+      <section class="cards" aria-label="作品入口">
+        <article class="card">
+          <div>
+            <h2>Demo A：力与运动专项仿真</h2>
+            <p>小车运动、受力箭头、惯性、摩擦、二力平衡、s-t 图像和 v-t 图像联动，适合讲解“运动过程与函数图像的对应关系”。</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag">SVG 动画</span>
+            <span class="tag">实时图像</span>
+            <span class="tag">课堂投屏</span>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="./motion_demo.html">打开专项 Demo</a>
+            <button class="button" type="button" data-preview="./motion_demo.html">在下方预览</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <div>
+            <h2>Demo B：五大物理模型合集</h2>
+            <p>凸透镜成像、欧姆定律、浮力、杠杆、物态变化曲线统一在一个标签式仿真平台里，覆盖初中物理作品集最有代表性的模型。</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag">拖拽探索</span>
+            <span class="tag">参数滑块</span>
+            <span class="tag">即时结论</span>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="./demo_code/index.html">打开合集 Demo</a>
+            <button class="button" type="button" data-preview="./demo_code/index.html">在下方预览</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="preview" aria-label="内嵌预览">
+        <div class="preview-head">
+          <h2 id="previewTitle">内嵌预览：五大物理模型合集</h2>
+          <div class="preview-actions">
+            <button class="button" type="button" data-preview="./motion_demo.html">力与运动</button>
+            <button class="button primary" type="button" data-preview="./demo_code/index.html">五大模型</button>
+          </div>
+        </div>
+        <iframe id="previewFrame" title="物理可视化 Demo 预览" src="./demo_code/index.html"></iframe>
+      </section>
+
+      <section class="notes">
+        <h2>求职展示亮点</h2>
+        <ul>
+          <li>不依赖第三方框架，体现原生 DOM、SVG、状态管理和交互建模能力。</li>
+          <li>每个模型都包含参数输入、动态图形、即时结论，适合教育产品原型展示。</li>
+          <li>借鉴 PhET 式明亮仿真风格，但未复制品牌素材，便于作为个人作品继续扩展。</li>
+        </ul>
       </section>
     </main>
 
-    <script src="./script.js"></script>
+    <script>
+      const frame = document.querySelector("#previewFrame");
+      const title = document.querySelector("#previewTitle");
+      const buttons = document.querySelectorAll("[data-preview]");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.preview;
+          frame.src = target;
+          title.textContent = target.includes("demo_code") ? "内嵌预览：五大物理模型合集" : "内嵌预览：力与运动专项仿真";
+        });
+      });
+    </script>
   </body>
 </html>
