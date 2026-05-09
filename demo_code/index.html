@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>初中物理五大可视化实验</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="page-title">
+        <header class="topbar">
+          <div class="brand-block">
+            <div class="brand-mark" aria-hidden="true">物</div>
+            <div>
+              <h1 id="page-title">初中物理五大可视化实验</h1>
+              <p>拖动关键对象，调节少量参数，观察现象、图像和物理结论同步变化。</p>
+            </div>
+          </div>
+          <div class="summary-card" aria-live="polite">
+            <span id="currentTopic">凸透镜成像</span>
+            <strong id="headlineValue">物距 30.0 cm</strong>
+          </div>
+        </header>
+
+        <section class="intro-strip" aria-label="仿真说明">
+          <div>
+            <strong>交互式仿真</strong>
+            <p>每个实验都保留少量关键参数，现象、数值和结论同步更新。</p>
+          </div>
+          <span>适合投屏演示 / 学生探究</span>
+        </section>
+
+        <nav class="tabbar" aria-label="实验切换">
+          <button class="tab-button active" type="button" data-demo="lens">凸透镜成像</button>
+          <button class="tab-button" type="button" data-demo="ohm">欧姆定律</button>
+          <button class="tab-button" type="button" data-demo="buoyancy">浮力模型</button>
+          <button class="tab-button" type="button" data-demo="lever">杠杆平衡</button>
+          <button class="tab-button" type="button" data-demo="phase">物态变化曲线</button>
+        </nav>
+
+        <div class="content-grid">
+          <section class="canvas-panel" aria-label="实验可视化区域">
+            <div class="section-heading">
+              <div>
+                <h2 id="demoTitle">凸透镜成像</h2>
+                <p id="demoSubtitle">拖动物体，观察像的位置、大小、正倒和虚实。</p>
+              </div>
+              <span id="demoBadge">光路</span>
+            </div>
+            <svg id="demoCanvas" class="demo-canvas" viewBox="0 0 920 520" role="img" aria-label="当前实验图示"></svg>
+          </section>
+
+          <aside class="side-panel" aria-label="参数和结论">
+            <section class="control-card">
+              <h2>参数控制</h2>
+              <div id="controlArea" class="control-area"></div>
+            </section>
+
+            <section class="result-card" aria-live="polite">
+              <h2>即时结论</h2>
+              <p id="resultText">物体在 2 倍焦距以外，成倒立、缩小的实像。</p>
+              <dl id="factList" class="fact-list"></dl>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
